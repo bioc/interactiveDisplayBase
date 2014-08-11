@@ -31,7 +31,7 @@ if(interactive()) {
 
 ## draw a dataframe object
 data(mtcars)
-display(mtcars))
+display(mtcars)
 
 ## draw a GRanges object
 data(mmgr)
