@@ -22,15 +22,15 @@ knit_hooks$set(output = function(x, options) {
 })
 ```
 
-```{r interactiveDisplay-load, echo=FALSE}
-suppressWarnings(suppressPackageStartupMessages(library(interactiveDisplay)))
+```{r interactiveDisplayBase-load, echo=FALSE}
+suppressWarnings(suppressPackageStartupMessages(library(interactiveDisplayBase)))
 ```
 
-# interactiveDisplay
+# interactiveDisplayBase
 
-[interactiveDisplay](http://bioconductor.org/packages/2.13/bioc/html/interactiveDisplay.html)
+[interactiveDisplayBase](http://bioconductor.org/packages/2.13/bioc/html/interactiveDisplayBase.html)
 
-`interactiveDisplay` uses the function `display()` to host a browser based 
+`interactiveDisplayBase` uses the function `display()` to host a browser based 
 application on the fly using the Shiny package.  Shiny UI elements are available based on the 
 object passed to `display()`.  These allow the user to modify how the plot is 
 displayed, and for some objects, modify or subset the data and send it back to 

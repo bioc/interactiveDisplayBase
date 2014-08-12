@@ -29,27 +29,6 @@ display(object, ...)
 
 if(interactive()) {
 
-## draw a dataframe object
-data(mtcars)
-display(mtcars)
-
-## draw a GRanges object
-data(mmgr)
-display(mmgr)
-
-## some display methods allow subsetting.
-## To take advantage, just use an assignment operator like this:
-mmgr2 <- display(mmgr)
-
-
-## draw a GRangesList object
-data(mmgrl)
-display(mmgrl)
-
-## draw an ExpressionSet object
-data(expr)
-display(expr)
-
 ## draw a data.frame
 display(mtcars)
 

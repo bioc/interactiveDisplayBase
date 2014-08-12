@@ -116,8 +116,8 @@ setMethod("display", signature(object = c("data.frame")),
 
 #################################################
 ## testing:
-## library(interactiveDisplay); df <- mtcars;
-## foo <- interactiveDisplay:::.dataFrame(df)
+## library(interactiveDisplayBase); df <- mtcars;
+## foo <- interactiveDisplayBase:::.dataFrame(df)
 ## foo <- display(df)
 
 ## TODO: add support for trapping last usage (for cases where user

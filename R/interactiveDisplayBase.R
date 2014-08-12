@@ -100,38 +100,38 @@ source("http://bioconductor.org/biocLite.R")
 ###   Additional Functions
 ################################################################################
 
-grid2jssvg <- function(gp){
-
-  jscode <- "
-              <script type='text/javascript'>
-              $(document).ready(function() {
-                $('svg').svgPan('viewport');
-              });
-              </script>
-            "
-  png(filename = "myplot.png", bg = "transparent",height=1000,width=1000)
-  print(gp)
-  
-  mysvg <- gridSVG::grid.export()
-  dev.off()
-  mysvg2 <- saveXML(mysvg$svg[["g"]])
-  mysvg3 <- sub("<g transform=","<g id='viewport' transform=",mysvg2)
-  mysvg4 <- sub(">NA<","><",mysvg3)
-  htmlxml <- HTML(paste("<svg xmlns='http://www.w3.org/2000/svg' 
-  xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' width='100%' 
-  height='100%'>",jscode,mysvg4,"</svg>",sep=""))
-  htmlxml
-}
+#grid2jssvg <- function(gp){
+#
+#  jscode <- "
+#              <script type='text/javascript'>
+#              $(document).ready(function() {
+#                $('svg').svgPan('viewport');
+#              });
+#              </script>
+#            "
+#  png(filename = "myplot.png", bg = "transparent",height=1000,width=1000)
+#  print(gp)
+#  
+#  mysvg <- gridSVG::grid.export()
+#  dev.off()
+#  mysvg2 <- saveXML(mysvg$svg[["g"]])
+#  mysvg3 <- sub("<g transform=","<g id='viewport' transform=",mysvg2)
+#  mysvg4 <- sub(">NA<","><",mysvg3)
+#  htmlxml <- HTML(paste("<svg xmlns='http://www.w3.org/2000/svg' 
+#  xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' width='100%' 
+#  height='100%'>",jscode,mysvg4,"</svg>",sep=""))
+#  htmlxml
+#}
 
 #  This pair of functions can be used in cases where it is desirable to
 #  give the user a choice between rendering a plot as svg or to use the default
 #  Shiny plot function.
 
-svgcheckout <- function(contents,sflag){
-  if(sflag==TRUE){
-    uiOutput(contents)
-  }
-  else{
-    plotOutput(contents)
-  }
-}
+#svgcheckout <- function(contents,sflag){
+#  if(sflag==TRUE){
+#    uiOutput(contents)
+#  }
+#  else{
+#    plotOutput(contents)
+#  }
+#}
