@@ -38,10 +38,11 @@ source("http://bioconductor.org/biocLite.R")
 .jstags <- function(){
   list(
   tags$script(src="/js/jquery.min.js"),
-  tags$script(src="/js/d3.v2.js"),
-  tags$script(src="/js/jquery-svgpan.js"),
-  tags$script(src="/js/jscolor/jscolor.js"))
+  tags$script(src="/js/d3.v2.js"))
 }
+
+#tags$script(src="/js/jquery-svgpan.js"),
+#tags$script(src="/js/jscolor/jscolor.js"))
 
 #.shiny-output-error { visibility: hidden; }
 #.shiny-output-error:before { visibility: hidden; }
