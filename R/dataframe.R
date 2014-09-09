@@ -4,7 +4,7 @@
      origStyle<- c( 
          '<script src="shared/datatables/js/jquery.dataTables.min.js"></script>',
          '<script class="shiny-html-output" 
-                  src= "/js/DTbinding.js"></script>',
+                  src= "/js-interactiveDisplayBase/DTbinding.js"></script>',
          '<link rel = "stylesheet", 
                 type = "text/css", 
                 href = "shared/datatables/css/DT_bootstrap.css"></link>',
