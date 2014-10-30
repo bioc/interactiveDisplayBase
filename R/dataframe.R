@@ -105,12 +105,87 @@ function(df, ..., summaryMessage = "", serverOptions = list(bSortClasses=TRUE))
     }
 }
 
+##########################################################################3
+## experimental (new) version of .dataFrame
+.dataFrame2 <- 
+    function(df, ..., summaryMessage = "", serverOptions = list(bSortClasses=TRUE))
+    {
+        rowNames <- rownames(df)
+        dt <- data.frame(rownames=rowNames,df)
+        ## define the app
+        app <- list(
+            ui = fluidPage(
+                title = 'The data from your data.frame',
+                sidebarLayout(
+                    sidebarPanel(textOutput('rows_out'),
+                                 br(),
+                                 actionButton("btnSend", "Send Rows")),
+                    mainPanel(dataTableOutput('tbl')),
+                    position = 'left'
+                )
+            )                
+            ,
+            server = function(input, output) {
+                output$rows_out <- renderText({
+                    paste(c('You selected these rows on the page:', 
+                            input$rows),
+                          collapse = ' ')
+                })                    
+                output$tbl <- renderDataTable(
+                    dt,
+                    options = list(pageLength = 20),
+                    callback = "function(table) {
+                    table.on('click.dt', 'tr', function() {
+                    $(this).toggleClass('selected');
+                    Shiny.onInputChange('rows',
+                    table.rows('.selected').indexes().toArray());
+                    }); }",
+                    serverOptions)
+
+        if (length(summaryMessage)!=1){
+        output$summary <- renderUI({
+            HTML(paste0(
+                '<span class="shiny-html-output" >',summaryMessage[1],'</span> ',
+                '<br>',
+                '<span class="shiny-html-output" >',summaryMessage[2],'</span> ',
+                '<br>',
+                '<span class="shiny-html-output" >',summaryMessage[3],'</span> ',
+                '<br>',
+                '<span class="shiny-html-output" >',summaryMessage[4],'</span> ' ,
+                '<br>',
+                '<span class="shiny-html-output" >',summaryMessage[5],'</span> ' ,
+                '<br>',
+                '<span class="shiny-html-output" >',summaryMessage[6],'</span> ' ,
+                '<br>'
+                ))    
+            })
+        }                
+                
+                observe({
+                    if(input$btnSend > 0)
+                        isolate({
+                            #print(input$rows)
+                            idx <- as.integer(input$rows) + 1
+                            stopApp(returnValue = df[idx,])
+                        })
+                })                            
+        })
+        ## selectively use the RStudio viewer pane (if available)
+        viewer <- getOption("viewer")
+        if (!is.null(viewer)){
+            runApp(app, launch.browser = rstudio::viewer, ...)
+        }else{
+            runApp(app, ...)
+        }
+}
+
+
 
 
 setMethod("display", signature(object = c("data.frame")),
     function(object, ...)
 {
-    .dataFrame(df=object, ...)
+    .dataFrame2(df=object, ...)
 })
 
 
