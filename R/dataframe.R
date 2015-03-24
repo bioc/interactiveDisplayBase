@@ -207,7 +207,7 @@ function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
             server = function(input, output) {
                 output$rows_out <- renderText({
                     paste(c('You selected these rows on the page:', 
-                            input$rows + 1),
+                            as.integer(input$rows)),
                           collapse = ' ')
                 })                    
                 output$tbl <- renderDataTable(
@@ -218,8 +218,13 @@ function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
                     callback = "function(table) {
                     table.on('click.dt', 'tr', function() {
                     $(this).toggleClass('selected');
-                    Shiny.onInputChange('rows',
-                     table.rows('.selected').eq(0).toArray());
+                    interm = table.rows('.selected').data();
+                    var selected = [];
+                    for (var i = 0; i < interm.length; i++) {
+                        debugger;
+                        selected.push(interm[i][0]);
+                    }
+                    Shiny.onInputChange('rows', selected);
                     }); }",
                     serverOptions)
 
