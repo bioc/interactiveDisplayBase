@@ -34,7 +34,7 @@
 }
 
 .dataFrame <- 
-function(df, ..., summaryMessage = "", serverOptions = list(bSortClasses=TRUE))
+function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
 {  
     colNames <- colnames(df)
     app <- list(ui=pageWithSidebar(
@@ -108,7 +108,7 @@ function(df, ..., summaryMessage = "", serverOptions = list(bSortClasses=TRUE))
 ##########################################################################3
 ## experimental (new) version of .dataFrame
 .dataFrame2 <- 
-    function(df, ..., summaryMessage = "", serverOptions = list(bSortClasses=TRUE))
+    function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
     {
         rowNames <- rownames(df)
         dt <- data.frame(rownames=rowNames,df)
@@ -164,8 +164,10 @@ function(df, ..., summaryMessage = "", serverOptions = list(bSortClasses=TRUE))
                 observe({
                     if(input$btnSend > 0)
                         isolate({
-                            #print(input$rows)
+                            print(input$rows)
                             idx <- as.integer(input$rows) + 1
+                            message("the input size is: ", length(input$rows))
+                            message("the input class is: ", class(input$rows))
                             stopApp(returnValue = df[idx,])
                         })
                 })                            
@@ -182,10 +184,93 @@ function(df, ..., summaryMessage = "", serverOptions = list(bSortClasses=TRUE))
 
 
 
+##########################################################################3
+## experimental new(er) version of .dataFrame
+.dataFrame3 <- 
+    function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
+    {
+        rowNames <- rownames(df)
+        dt <- data.frame(rownames=rowNames,df)
+        ## define the app
+        app <- list(
+            ui = fluidPage(
+                title = 'The data from your data.frame',
+                sidebarLayout(
+                    sidebarPanel(textOutput('rows_out'),
+                                 br(),
+                                 actionButton("btnSend", "Send Rows")),
+                    mainPanel(dataTableOutput('tbl')),
+                    position = 'left'
+                )
+            )                
+            ,
+            server = function(input, output) {
+                output$rows_out <- renderText({
+                    paste(c('You selected these rows on the page:', 
+                            input$rows + 1),
+                          collapse = ' ')
+                })                    
+                output$tbl <- renderDataTable(
+                    dt,
+                    ## Temporary hack to put everything onto just one page (ARGH)
+#                     options = list(pageLength = 20000),
+                    options = list(pageLength = 20),
+                    callback = "function(table) {
+                    table.on('click.dt', 'tr', function() {
+                    $(this).toggleClass('selected');
+                    Shiny.onInputChange('rows',
+                     table.rows('.selected').eq(0).toArray());
+                    }); }",
+                    serverOptions)
+
+##                       table.rows('.selected').indexes().toArray());
+
+        if (length(summaryMessage)!=1){
+        output$summary <- renderUI({
+            HTML(paste0(
+                '<span class="shiny-html-output" >',summaryMessage[1],'</span> ',
+                '<br>',
+                '<span class="shiny-html-output" >',summaryMessage[2],'</span> ',
+                '<br>',
+                '<span class="shiny-html-output" >',summaryMessage[3],'</span> ',
+                '<br>',
+                '<span class="shiny-html-output" >',summaryMessage[4],'</span> ' ,
+                '<br>',
+                '<span class="shiny-html-output" >',summaryMessage[5],'</span> ' ,
+                '<br>',
+                '<span class="shiny-html-output" >',summaryMessage[6],'</span> ' ,
+                '<br>'
+                ))    
+            })
+        }                
+                
+                observe({
+                    if(input$btnSend > 0)
+                        isolate({
+                            print(input$rows)
+                          ##  print(isolate(input$myTable))
+                            idx <- as.integer(input$rows) + 1
+                            message("the input size is: ", length(input$rows))
+                            message("the input class is: ", class(input$rows))
+                            stopApp(returnValue = df[idx,])
+                        })
+                })                            
+        })
+        ## selectively use the RStudio viewer pane (if available)
+        viewer <- getOption("viewer")
+        if (!is.null(viewer)){
+            runApp(app, launch.browser = rstudio::viewer, ...)
+        }else{
+            runApp(app, ...)
+        }
+}
+
+
+
 setMethod("display", signature(object = c("data.frame")),
     function(object, ...)
 {
-    .dataFrame2(df=object, ...)
+    .dataFrame3(df=object, ...)
 })
 
 
