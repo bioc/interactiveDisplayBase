@@ -212,23 +212,15 @@ function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
                 })                    
                 output$tbl <- renderDataTable(
                     dt,
-                    ## Temporary hack to put everything onto just one page (ARGH)
-#                     options = list(pageLength = 20000),
                     options = list(pageLength = 20),
                     callback = "function(table) {
-                    table.on('click.dt', 'tr', function() {
-                    $(this).toggleClass('selected');
-                    interm = table.rows('.selected').data();
-                    var selected = [];
-                    for (var i = 0; i < interm.length; i++) {
-                        debugger;
-                        selected.push(interm[i][0]);
-                    }
-                    Shiny.onInputChange('rows', selected);
-                    }); }",
+                            table.on('click.dt', 'tr', function() {
+                            $(this).toggleClass('selected');
+                            var rownames = $.map(table.rows('.selected').data(), 
+                                            function(x) { return(x[0]) });
+                            Shiny.onInputChange('rows', rownames);
+                        }); }",
                     serverOptions)
-
-##                       table.rows('.selected').indexes().toArray());
 
         if (length(summaryMessage)!=1){
         output$summary <- renderUI({
@@ -253,8 +245,7 @@ function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
                     if(input$btnSend > 0)
                         isolate({
                             print(input$rows)
-                          ##  print(isolate(input$myTable))
-                            idx <- as.integer(input$rows) + 1
+                            idx <- as.integer(input$rows)
                             message("the input size is: ", length(input$rows))
                             message("the input class is: ", class(input$rows))
                             stopApp(returnValue = df[idx,])
