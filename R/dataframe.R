@@ -183,6 +183,10 @@ function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
 
 
 
+## helper for rowname wrangling:
+.rownamesAreUnique <- function(df){
+    length(rownames(df)) == length(unique(rownames(df)))
+}
 
 ##########################################################################3
 ## experimental new(er) version of .dataFrame
@@ -190,7 +194,14 @@ function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
     function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
     {
         rowNames <- rownames(df)
-        dt <- data.frame(rownames=rowNames,df)
+        ## If the rownames are unique then just use the names as idx.
+        ## but if not, then also also append supplementary idx
+        if(.rownamesAreUnique(df)){
+            dt <- data.frame(idx=rowNames,df)            
+        }else{
+            dt <- data.frame(idx=1:dim(df)[1],rownames=rowNames,df)          
+        }
+
         ## define the app
         app <- list(
             ui = fluidPage(
@@ -206,8 +217,8 @@ function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
             ,
             server = function(input, output) {
                 output$rows_out <- renderText({
-                    paste(c('You selected these rows on the page:', 
-                            as.integer(input$rows)),
+                    paste(c('Selected rows:', 
+                            input$rows),
                           collapse = ' ')
                 })                    
                 output$tbl <- renderDataTable(
@@ -244,10 +255,10 @@ function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
                 observe({
                     if(input$btnSend > 0)
                         isolate({
-                            print(input$rows)
-                            idx <- as.integer(input$rows)
-                            message("the input size is: ", length(input$rows))
-                            message("the input class is: ", class(input$rows))
+#                             print(input$rows)
+                            idx <- input$rows
+#                             message("the input size is: ", length(input$rows))
+#                             message("the input class is: ", class(input$rows))
                             stopApp(returnValue = df[idx,])
                         })
                 })                            
