@@ -23,7 +23,7 @@
                 title = 'The data from your data.frame',
                 fluidRow(textOutput('rows_out'),
                          br(),
-                         actionButton("btnSend", "Send Rows")),
+                         actionButton("btnSend", "Return rows to R session")),
                 hr(),
                 mainPanel(dataTableOutput('tbl'))
                 ),
