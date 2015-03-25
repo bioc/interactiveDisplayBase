@@ -21,15 +21,12 @@
         app <- list(
             ui = fluidPage(
                 title = 'The data from your data.frame',
-                sidebarLayout(
-                    sidebarPanel(textOutput('rows_out'),
-                                 br(),
-                                 actionButton("btnSend", "Send Rows")),
-                    mainPanel(dataTableOutput('tbl')),
-                    position = 'left'
-                )
-            )                
-            ,
+                fluidRow(textOutput('rows_out'),
+                         br(),
+                         actionButton("btnSend", "Send Rows")),
+                hr(),
+                mainPanel(dataTableOutput('tbl'))
+                ),
             server = function(input, output) {
                 output$rows_out <- renderText({
                     paste(c('Selected rows:', 
