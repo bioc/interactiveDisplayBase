@@ -6,7 +6,8 @@
 }
 
 .dataFrame3 <- 
-    function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
+    function(df, ..., summaryMessage = "", 
+             serverOptions = list(orderClasses=TRUE))
     {
         rowNames <- rownames(df)
         ## If the rownames are unique then just use the names as idx.
@@ -20,6 +21,7 @@
         ## define the app
         app <- list(
             ui = fluidPage(
+                tags$head(tags$style(HTML("tfoot {display: table-header-group;}"))),
                 title = 'The data from your data.frame',
                 fluidRow(textOutput('rows_out'),
                          br(),
