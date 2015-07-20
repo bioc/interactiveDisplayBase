@@ -80,7 +80,7 @@
     ## selectively use the RStudio viewer pane (if available)
 ##    viewer <- getOption("viewer")
     if (.Platform$GUI=='RStudio'){
-        runApp(app, launch.browser = rstudio::viewer, ...)
+        runApp(app, launch.browser = rstudioapi::viewer, ...)
     }else{
         runApp(app, ...)
     }
@@ -213,7 +213,7 @@ function(df, ..., summaryMessage = "", serverOptions = list(orderClasses=TRUE))
     ## selectively use the RStudio viewer pane (if available)
     viewer <- getOption("viewer")
     if (!is.null(viewer)){
-        runApp(app, launch.browser = rstudio::viewer, ...)
+        runApp(app, launch.browser = rstudioapi::viewer, ...)
     }else{
         runApp(app, ...)
     }
