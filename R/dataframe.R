@@ -78,8 +78,8 @@
                 })                            
     })
     ## selectively use the RStudio viewer pane (if available)
-    viewer <- getOption("viewer")
-    if (!is.null(viewer)){
+##    viewer <- getOption("viewer")
+    if (.Platform$GUI=='RStudio'){
         runApp(app, launch.browser = rstudio::viewer, ...)
     }else{
         runApp(app, ...)
