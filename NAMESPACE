@@ -2,5 +2,6 @@ import(methods)
 import(BiocGenerics)
 import(shiny)
 
+export(.runApp)
 export(display)
 exportMethods(display)
