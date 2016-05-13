@@ -3,18 +3,18 @@
 ################################################################################
 
 ## declare the display generic
-setGeneric("display", function(object, ...) 
+setGeneric("display", function(object, ...)
   standardGeneric("display")
 )
 
-setMethod("display", 
-signature(object = "ANY"), 
+setMethod("display",
+signature(object = "ANY"),
 function(object){
   message("Wrong object")
 })
 
-setMethod("display", 
-signature(object = "missing"), 
+setMethod("display",
+signature(object = "missing"),
 function(object){
   message("Missing object")
 })
@@ -23,8 +23,8 @@ function(object){
 ###   Helper Functions
 ################################################################################
 
-source("http://bioconductor.org/biocLite.R")
 .usePackage <- function(p) {
+  source("http://bioconductor.org/biocLite.R")
   if (!is.element(p, installed.packages()[,1])){
     stop(paste("The required package, '",p,"', is missing.  Please install it by
                typing biocLite('",p,"') in the console", sep=""))
@@ -51,20 +51,20 @@ source("http://bioconductor.org/biocLite.R")
 
   shiny::tags$head(
     shiny::tags$style(type='text/css', "
-  
+
     .span4 {
       width: 370px;
       position: absolute;
       z-index: 50;
     }
-  
+
     .span8 {
       position: absolute;
       left: 400px;
       right: 30px;
       width: auto;
       height: auto;
-    }    
+    }
 
     ")
   )
@@ -80,7 +80,7 @@ source("http://bioconductor.org/biocLite.R")
 }
 
 #selDataTableOutput <- function (outputId){
-#  tagList(singleton(tags$head(tags$link(rel = "stylesheet", 
+#  tagList(singleton(tags$head(tags$link(rel = "stylesheet",
 #    type = "text/css", href = "shared/datatables/css/DT_bootstrap.css"),
 #    tags$style(type="text/css", ".rowsSelected td{background-color: rgba(112,164,255,0.2) !important}"),
 #    tags$style(type="text/css", ".selectable div table tbody tr{cursor: hand; cursor: pointer;}"),
@@ -90,8 +90,8 @@ source("http://bioconductor.org/biocLite.R")
 #      -khtml-user-select: none;
 #      -moz-user-select: none;
 #      -ms-user-select: none;
-#      user-select: none;}"),                          
-#    tags$script(src = "shared/datatables/js/jquery.dataTables.min.js"), 
+#      user-select: none;}"),
+#    tags$script(src = "shared/datatables/js/jquery.dataTables.min.js"),
 #    tags$script(src = "shared/datatables/js/DT_bootstrap.js"),
 #    tags$script(src = "/js/DTbinding.js"))),
 #  div(id = outputId, class = "shiny-datatable-output selectable"))
@@ -112,14 +112,14 @@ source("http://bioconductor.org/biocLite.R")
 #            "
 #  png(filename = "myplot.png", bg = "transparent",height=1000,width=1000)
 #  print(gp)
-#  
+#
 #  mysvg <- gridSVG::grid.export()
 #  dev.off()
 #  mysvg2 <- saveXML(mysvg$svg[["g"]])
 #  mysvg3 <- sub("<g transform=","<g id='viewport' transform=",mysvg2)
 #  mysvg4 <- sub(">NA<","><",mysvg3)
-#  htmlxml <- HTML(paste("<svg xmlns='http://www.w3.org/2000/svg' 
-#  xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' width='100%' 
+#  htmlxml <- HTML(paste("<svg xmlns='http://www.w3.org/2000/svg'
+#  xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' width='100%'
 #  height='100%'>",jscode,mysvg4,"</svg>",sep=""))
 #  htmlxml
 #}
