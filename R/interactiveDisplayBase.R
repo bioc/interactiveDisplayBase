@@ -24,7 +24,8 @@ function(object){
 ################################################################################
 
 .usePackage <- function(p) {
-  source("http://bioconductor.org/biocLite.R")
+  if (!requireNamespace("BiocManager", quietly=TRUE))
+      install.packages("BiocManager")
   if (!is.element(p, installed.packages()[,1])){
     stop(paste("The required package, '",p,"', is missing.  Please install it by
                typing biocLite('",p,"') in the console", sep=""))
