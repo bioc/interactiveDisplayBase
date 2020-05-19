@@ -23,17 +23,6 @@ function(object){
 ###   Helper Functions
 ################################################################################
 
-.usePackage <- function(p) {
-  if (!requireNamespace("BiocManager", quietly=TRUE))
-      install.packages("BiocManager")
-  if (!is.element(p, installed.packages()[,1])){
-    stop(paste("The required package, '",p,"', is missing.  Please install it by
-               typing BiocManager::install('",p,"') in the console", sep=""))
-  }
-  require(p, character.only = TRUE)
-}
-
-
 ## helper for JS library tags
 
 .jstags <- function(){
