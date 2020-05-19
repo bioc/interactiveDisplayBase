@@ -85,7 +85,7 @@
 setMethod("display", signature(object = c("data.frame")),
           function(object, ...)
           {
-              .dataFrame3(df=object, ...)
+              .dataFrame(df=object, ...)
           })
 
 
