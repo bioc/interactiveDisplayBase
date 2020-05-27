@@ -22,18 +22,18 @@ knit_hooks$set(output = function(x, options) {
 })
 ```
 
-```{r interactiveDisplayBase-load, echo=FALSE}
-suppressWarnings(suppressPackageStartupMessages(library(interactiveDisplayBase)))
+```{r interactiveDisplayBase-load,include=TRUE,results="hide",message=FALSE,warning=FALSE}
+library(interactiveDisplayBase)
 ```
 
 # interactiveDisplayBase
 
 [interactiveDisplayBase](http://bioconductor.org/packages/2.13/bioc/html/interactiveDisplayBase.html)
 
-`interactiveDisplayBase` uses the function `display()` to host a browser based 
-application on the fly using the Shiny package.  Shiny UI elements are available based on the 
-object passed to `display()`.  These allow the user to modify how the plot is 
-displayed, and for some objects, modify or subset the data and send it back to 
+`interactiveDisplayBase` uses the function `display()` to host a browser based
+application on the fly using the Shiny package.  Shiny UI elements are available based on the
+object passed to `display()`.  These allow the user to modify how the plot is
+displayed, and for some objects, modify or subset the data and send it back to
 the console.
 
 ## Methods
@@ -80,7 +80,7 @@ Michael Bostock <br/>
 http://d3js.org/ <br/>
 
 Javascript for returning values from data.frames <br/>
-Kirill Savin <br/> 
+Kirill Savin <br/>
 
 Help with the display method for data.frames <br/>
 Dan Tenenbaum <br/>

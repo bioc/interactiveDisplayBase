@@ -4,9 +4,12 @@ Title: Base package for enabling powerful shiny web displays of Bioconductor
         objects
 Version: 1.26.2
 Date: 2014-09-09
-Author: Shawn Balcome, Marc Carlson
-Maintainer: Shawn Balcome <balc0022@umn.edu>
-Imports: shiny
+Authors@R: c(
+    person("Shawn", "Balcome", role = c("aut", "cre"),
+        email = "balc0022@umn.edu"),
+    person("Marc", "Carlson", role = "ctb")
+  )
+Imports: shiny, DT
 Depends: R (>= 2.10), methods, BiocGenerics
 Suggests: knitr
 Enhances: rstudioapi
@@ -19,3 +22,4 @@ VignetteBuilder: knitr
 biocViews: GO, GeneExpression, Microarray, Sequencing, Classification,
         Network, QualityControl, Visualization, Visualization,
         Genetics, DataRepresentation, GUI, AnnotationData
+RoxygenNote: 7.1.0
