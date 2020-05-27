@@ -50,5 +50,5 @@ if (interactive()) {
 }
 }
 
-\keyword{manip}
+\keyword{manip, internal}
 
