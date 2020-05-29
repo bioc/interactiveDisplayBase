@@ -8,7 +8,9 @@
     )
 }
 
-.dataFrame3 <- function(df, ...) {
+.dataFrame3 <- function(
+    df, ..., summaryMessage = "", serverOptions = list(orderClasses = TRUE)
+) {
     rowNames <- rownames(df)
     ## If the rownames are unique then just use the names as idx.
     ## but if not, then also also append supplementary idx
@@ -21,10 +23,11 @@
     ## define the app
     app <- list(
         ui = fluidPage(
-            titlePanel("Select Rows"),
+            titlePanel("Select rows in the Data Table"),
             sidebarLayout(
                 sidebarPanel(
-                    actionButton("btnSend", "Return rows to R session")
+                    actionButton("btnSend", "Send"),
+                    width = 1
                 ),
                 mainPanel(
                     DT::dataTableOutput('tbl')
@@ -33,9 +36,20 @@
         ),
         server = function(input, output) {
             output$tbl <- DT::renderDataTable(
-                df, server = FALSE,
-                options = list(orderClasses = TRUE)
+                df, server = TRUE, filter = "top",
+                options = serverOptions
             )
+
+            if (length(summaryMessage) != 1L) {
+                output$summary <- renderUI({
+                    HTML(paste0(
+                        sprintf(
+                            '<span class="shiny-html-output" >%s</span> ',
+                            summaryMessage
+                        ), "<br>"
+                    ))
+                })
+            }
 
             observe({
                 if (input$btnSend > 0)
@@ -51,7 +65,7 @@
 
 }
 
-setMethod("display", signature(object = c("data.frame")),
+setMethod("display", signature(object = "data.frame"),
     function(object, ...) {
         .dataFrame3(df=object, ...)
     }
