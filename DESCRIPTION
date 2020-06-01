@@ -18,7 +18,7 @@ Description: The interactiveDisplayBase package contains the the basic
         methods needed to generate interactive Shiny based display
         methods for Bioconductor objects.
 License: Artistic-2.0
-Collate: interactiveDisplayBase.R dataframe.R dot_runApp.R
+Collate: interactiveDisplayBase.R dataframe.R dot_runApp.R zzz.R
 VignetteBuilder: knitr
 biocViews: GO, GeneExpression, Microarray, Sequencing, Classification,
         Network, QualityControl, Visualization, Visualization,
