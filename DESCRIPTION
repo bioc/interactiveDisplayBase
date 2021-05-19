@@ -2,7 +2,7 @@ Package: interactiveDisplayBase
 Type: Package
 Title: Base package for enabling powerful shiny web displays of Bioconductor
         objects
-Version: 1.30.0
+Version: 1.31.0
 Date: 2014-09-09
 Authors@R: c(
     person("Shawn", "Balcome", role = c("aut", "cre"),
